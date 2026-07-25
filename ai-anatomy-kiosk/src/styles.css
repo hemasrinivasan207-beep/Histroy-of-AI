@@ -1,0 +1,167 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-cognitive: var(--cognitive);
+  --color-sensory: var(--sensory);
+  --color-physical: var(--physical);
+  --color-core: var(--core);
+  --color-active: var(--active);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
+  --color-muted: var(--muted);
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --background: #fbf7f0;
+  --foreground: #3a2e39;
+  --muted: #8a7a85;
+  --cognitive: #8e7cff;
+  --sensory: #2ec4b6;
+  --physical: #6bcb77;
+  --core: #ff6b6b;
+  --active: #ffc145;
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(58, 46, 57, 0.08);
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-card-border);
+  }
+  html,
+  body {
+    background: transparent;
+    color: var(--color-foreground);
+    font-family: var(--font-display);
+  }
+  body {
+    background: var(--color-background);
+    min-height: 100vh;
+  }
+}
+
+@utility accent-text-cognitive {
+  color: var(--color-cognitive);
+}
+@utility accent-text-sensory {
+  color: var(--color-sensory);
+}
+@utility accent-text-physical {
+  color: var(--color-physical);
+}
+@utility accent-text-core {
+  color: var(--color-core);
+}
+
+@utility glass-card {
+  background: var(--color-card-bg);
+  backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--color-card-border);
+  box-shadow:
+    0 8px 32px rgba(58, 46, 57, 0.08),
+    0 1px 3px rgba(58, 46, 57, 0.04);
+}
+
+@utility hotspot-pulse {
+  animation: hotspot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes hotspot-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(255, 193, 69, 0.5),
+      0 0 8px rgba(255, 193, 69, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(255, 193, 69, 0),
+      0 0 20px rgba(255, 193, 69, 0.5);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@utility float-y {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--stagger-dir, 0px)) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@utility animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+@utility animate-fade-in-scale {
+  animation: fade-in-scale 0.6s ease-out forwards;
+}
