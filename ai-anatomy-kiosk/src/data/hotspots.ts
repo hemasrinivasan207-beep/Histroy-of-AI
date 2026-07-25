@@ -26,13 +26,13 @@ export const CATEGORIES: ("All" | Category)[] = [
 ];
 
 export const CATEGORY_COLOR: Record<Category, string> = {
-  Cognitive: "#8E7CFF",
-  Sensory: "#2EC4B6",
-  Physical: "#6BCB77",
-  Core: "#FF6B6B",
+  Cognitive: "#6B54E6",
+  Sensory: "#1FA89B",
+  Physical: "#4DB85C",
+  Core: "#E85050",
 };
 
-export const ACTIVE_COLOR = "#FFC145";
+export const ACTIVE_COLOR = "#F5AD00";
 
 export const AI_BOD = { x: 50, y: 34 };
 

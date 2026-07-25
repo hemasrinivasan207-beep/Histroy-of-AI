@@ -22,11 +22,11 @@
   --background: #fbf7f0;
   --foreground: #3a2e39;
   --muted: #8a7a85;
-  --cognitive: #8e7cff;
-  --sensory: #2ec4b6;
-  --physical: #6bcb77;
-  --core: #ff6b6b;
-  --active: #ffc145;
+  --cognitive: #6b54e6;
+  --sensory: #1fa89b;
+  --physical: #4db85c;
+  --core: #e85050;
+  --active: #f5ad00;
   --card-bg: rgba(255, 255, 255, 0.72);
   --card-border: rgba(58, 46, 57, 0.08);
   --radius: 0.75rem;
@@ -78,13 +78,13 @@
   0%,
   100% {
     box-shadow:
-      0 0 0 0 rgba(255, 193, 69, 0.5),
-      0 0 8px rgba(255, 193, 69, 0.3);
+      0 0 0 0 rgba(245, 173, 0, 0.6),
+      0 0 10px rgba(245, 173, 0, 0.4);
   }
   50% {
     box-shadow:
-      0 0 0 10px rgba(255, 193, 69, 0),
-      0 0 20px rgba(255, 193, 69, 0.5);
+      0 0 0 14px rgba(245, 173, 0, 0),
+      0 0 28px rgba(245, 173, 0, 0.6);
   }
 }
 

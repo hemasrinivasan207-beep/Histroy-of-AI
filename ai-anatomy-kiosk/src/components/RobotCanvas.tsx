@@ -59,21 +59,21 @@ export function RobotCanvas({
           style={{ left: `${AI_BOD.x}%`, top: `${AI_BOD.y}%` }}
           aria-label="AI Bod Central Mainframe"
         >
-          <span className="relative block h-8 w-8 rounded-full hotspot-pulse sm:h-10 sm:w-10">
+          <span className="relative block h-10 w-10 rounded-full hotspot-pulse sm:h-12 sm:w-12">
             <span
               className="absolute inset-0 rounded-full"
               style={{
-                background: `radial-gradient(circle, ${CATEGORY_COLOR.Core}55, ${CATEGORY_COLOR.Cognitive}35 60%, transparent 75%)`,
-                border: `2px solid ${CATEGORY_COLOR.Core}`,
-                boxShadow: `0 0 20px ${CATEGORY_COLOR.Core}60, 0 0 40px ${CATEGORY_COLOR.Core}30`,
+                background: `radial-gradient(circle, ${CATEGORY_COLOR.Core}65, ${CATEGORY_COLOR.Cognitive}45 60%, transparent 75%)`,
+                border: `2.5px solid ${CATEGORY_COLOR.Core}`,
+                boxShadow: `0 0 24px ${CATEGORY_COLOR.Core}70, 0 0 48px ${CATEGORY_COLOR.Core}40`,
               }}
             />
             <span
-              className="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-nowrap rounded-md px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.2em] sm:text-[10px]"
+              className="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-nowrap rounded-md px-3 py-1 font-display text-xs font-bold uppercase tracking-[0.2em] sm:text-sm"
               style={{
                 color: CATEGORY_COLOR.Core,
-                border: `1px solid ${CATEGORY_COLOR.Core}40`,
-                background: "rgba(251,247,240,0.85)",
+                border: `2px solid ${CATEGORY_COLOR.Core}50`,
+                background: "rgba(251,247,240,0.94)",
               }}
             >
               AI BOD
