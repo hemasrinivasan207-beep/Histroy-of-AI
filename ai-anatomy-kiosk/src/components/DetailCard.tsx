@@ -10,13 +10,14 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
 
   return (
     <div className="fixed bottom-4 right-4 z-40 w-[calc(100vw-2rem)] max-w-sm animate-fade-in">
-      <div className="relative rounded-xl glass-card p-5 border border-cyan-500/40 shadow-[0_0_20px_rgba(79,209,197,0.15)]">
+      {/* Updated with a thicker, brighter border and stronger glow */}
+      <div className="relative rounded-xl glass-card p-5 border-2 border-cyan-400 shadow-[0_0_25px_rgba(79,209,197,0.4)]">
         {/* Category color top accent bar */}
         <div
           className="absolute inset-x-5 -top-px h-[2px] rounded-full"
           style={{ background: color }}
         />
-
+        {/* ... rest of your code ... */}
         <button
           onClick={onClose}
           className="absolute right-3 top-3 grid h-7 w-7 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
