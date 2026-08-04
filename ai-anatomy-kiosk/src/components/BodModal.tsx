@@ -5,11 +5,28 @@ type BodModalProps = {
 };
 
 export function BodModal({ onClose }: BodModalProps) {
+  const speakContent = () => {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel(); // Stop any ongoing speech
+
+    const textToRead = "AI Bod. Integrated Cybernetic Intelligence System. AI Bod is the fully-integrated central mainframe binding every cognitive, sensory and physical subsystem into a single cybernetic organism. Cognitive stacks, including Brain, Memory and Emotion cores, orchestrate reasoning, contextual recall, and affective interpretation through the neural bus. Sensory modules, including Eyes, Ears, Face, and Voice, feed a continuous multi-modal telemetry stream into the mainframe, allowing environmental awareness and human-parity social interaction in real time. Physical actuators, including Hands and Legs, receive fused motion plans generated from cognitive intent and sensory grounding. The AI Heart serves as the power and thermal management matrix, distributing energy across the chassis via a solid-state lithium core with intelligent throttling. Operational philosophy prioritises adaptive coexistence.";
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.rate = 1.0; 
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const handleClose = () => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); // Stops speech immediately when closed
+    }
+    onClose();
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 grid place-items-center p-4 backdrop-blur-sm animate-fade-in"
       style={{ background: "rgba(251,247,240,0.7)" }}
-      onClick={onClose}
+      onClick={handleClose}
     >
       <div
         className="relative w-full max-w-2xl rounded-xl glass-card p-6 sm:p-8 animate-fade-in-scale"
@@ -18,13 +35,23 @@ export function BodModal({ onClose }: BodModalProps) {
         {/* Coral accent bar */}
         <div className="absolute inset-x-6 -top-px h-[2px] rounded-full bg-core" />
 
-        <button
-          onClick={onClose}
-          className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
-          aria-label="Close"
-        >
-          ✕
-        </button>
+        {/* Action Buttons (Read Aloud & Close) */}
+        <div className="absolute right-3 top-3 flex items-center gap-1.5">
+          <button
+            onClick={speakContent}
+            className="grid h-7 px-2.5 place-items-center rounded-lg font-mono text-[10px] uppercase tracking-widest bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 transition-colors hover:bg-cyan-500/20"
+            aria-label="Read Aloud"
+          >
+            🔊 Read
+          </button>
+          <button
+            onClick={handleClose}
+            className="grid h-8 w-8 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
 
         <div className="flex items-center gap-2">
           <span
