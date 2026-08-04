@@ -10,12 +10,19 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
 
   const speakContent = () => {
     if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel(); // Stop any ongoing speech
+    window.speechSynthesis.cancel();
 
     const textToRead = `${hotspot.name}. ${hotspot.description}. Fun fact: ${hotspot.funFact}. Origin log: ${hotspot.history}`;
     const utterance = new SpeechSynthesisUtterance(textToRead);
     utterance.rate = 1.0; 
     window.speechSynthesis.speak(utterance);
+  };
+
+  const handleClose = () => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); // Stops speech immediately on close
+    }
+    onClose();
   };
 
   return (
@@ -41,7 +48,7 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
               🔊 Read
             </button>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="grid h-7 w-7 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
               aria-label="Close"
             >
