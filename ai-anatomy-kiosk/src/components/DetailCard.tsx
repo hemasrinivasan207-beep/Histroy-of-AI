@@ -17,6 +17,10 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
           className="absolute inset-x-5 -top-px h-[2px] rounded-full"
           style={{ background: color }}
         />
+        <div 
+  className="relative rounded-xl glass-card p-5 shadow-[0_0_25px_rgba(79,209,197,0.4)]"
+  style={{ border: "2px solid #4fd1c5" }}
+>
         {/* ... rest of your code ... */}
         <button
           onClick={onClose}
