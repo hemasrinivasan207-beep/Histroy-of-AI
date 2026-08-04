@@ -1,12 +1,9 @@
 export function Header() {
   return (
-    <header className="relative z-10 w-full px-4 py-6 flex justify-center items-center">
+    <header className="relative z-10 w-full px-4 py-8 bg-slate-950 flex justify-center items-center border-b border-slate-800">
       <div className="relative">
-        {/* Glowing background effect */}
-        <div className="absolute -inset-1 blur-xl bg-cyan-400 opacity-60 rounded-full animate-pulse"></div>
-        
-        {/* Main heading */}
-        <h1 className="relative text-3xl md:text-5xl font-extrabold text-cyan-400 tracking-widest text-center drop-shadow-[0_0_15px_rgba(34,211,238,0.8)]">
+        {/* Main heading with minimal cyan glow and dark blue shadow */}
+        <h1 className="relative text-4xl md:text-6xl font-black text-[#4FD1C5] tracking-[0.2em] text-center drop-shadow-[2px_2px_4px_rgba(0,0,139,0.9)] uppercase">
           AI BOD
         </h1>
       </div>
