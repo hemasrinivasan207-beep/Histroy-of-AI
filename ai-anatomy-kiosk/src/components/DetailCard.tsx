@@ -8,6 +8,16 @@ type DetailCardProps = {
 export function DetailCard({ hotspot, onClose }: DetailCardProps) {
   const color = CATEGORY_COLOR[hotspot.category];
 
+  const speakContent = () => {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel(); // Stop any ongoing speech
+
+    const textToRead = `${hotspot.name}. ${hotspot.description}. Fun fact: ${hotspot.funFact}. Origin log: ${hotspot.history}`;
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.rate = 1.0; 
+    window.speechSynthesis.speak(utterance);
+  };
+
   return (
     <div className="fixed bottom-4 right-4 z-40 w-[calc(100vw-2rem)] max-w-sm animate-fade-in">
       <div 
@@ -21,13 +31,23 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
             style={{ background: color }}
           />
 
-          <button
-            onClick={onClose}
-            className="absolute right-3 top-3 grid h-7 w-7 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
-            aria-label="Close"
-          >
-            ✕
-          </button>
+          {/* Action Buttons (Read Aloud & Close) */}
+          <div className="absolute right-3 top-3 flex items-center gap-1.5">
+            <button
+              onClick={speakContent}
+              className="grid h-7 px-2.5 place-items-center rounded-lg font-mono text-[10px] uppercase tracking-widest bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 transition-colors hover:bg-cyan-500/20"
+              aria-label="Read Aloud"
+            >
+              🔊 Read
+            </button>
+            <button
+              onClick={onClose}
+              className="grid h-7 w-7 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
 
           <div className="flex items-center gap-2">
             <span
