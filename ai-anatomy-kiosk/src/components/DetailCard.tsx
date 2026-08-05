@@ -10,18 +10,21 @@ type DetailCardProps = {
 export function DetailCard({ hotspot, onClose }: DetailCardProps) {
   const color = CATEGORY_COLOR[hotspot.category];
 
-  // Right side: Brain, Memory, Face, Heart, Legs
-  // Left side: Eyes, Ears, Voice, Emotion, Hands
   const rightSideIds = ["brain", "memory", "face", "heart", "legs"];
   const side = rightSideIds.includes(hotspot.id.toLowerCase()) ? "right" : "left";
 
+  // Automatically stop speech whenever the selected hotspot changes or component unmounts
   useEffect(() => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    
     return () => {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
     };
-  }, []);
+  }, [hotspot]);
 
   const speakContent = () => {
     if (!('speechSynthesis' in window)) return;
