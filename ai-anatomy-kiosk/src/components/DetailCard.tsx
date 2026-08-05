@@ -3,10 +3,11 @@ import { CATEGORY_COLOR, ACTIVE_COLOR, type Hotspot } from "@/data/hotspots";
 
 type DetailCardProps = {
   hotspot: Hotspot;
+  side?: "right" | "left";
   onClose: () => void;
 };
 
-export function DetailCard({ hotspot, onClose }: DetailCardProps) {
+export function DetailCard({ hotspot, side = "left", onClose }: DetailCardProps) {
   const color = CATEGORY_COLOR[hotspot.category];
 
   useEffect(() => {
@@ -38,8 +39,11 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
     onClose();
   };
 
+  // Position dynamically based on the side argument
+  const positionClass = side === "right" ? "fixed bottom-4 right-4 z-40" : "fixed bottom-4 left-4 z-40";
+
   return (
-    <div className="fixed bottom-4 right-4 z-40 w-[calc(100vw-2rem)] max-w-sm animate-fade-in">
+    <div className={`${positionClass} w-[calc(100vw-2rem)] max-w-sm animate-fade-in`}>
       <div 
         className="relative rounded-xl overflow-hidden shadow-2xl"
         style={{ border: "2px solid #4fd1c5", boxShadow: "0 0 30px rgba(79,209,197,0.5)" }}
