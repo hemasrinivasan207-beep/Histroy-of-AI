@@ -8,29 +8,27 @@ type BodModalProps = {
 export function BodModal({ onClose }: BodModalProps) {
   useEffect(() => {
     return () => {
-      if ('speechSynthesis' in window) {
+      if ("speechSynthesis" in window) {
         window.speechSynthesis.cancel();
       }
     };
   }, []);
 
   const speakContent = () => {
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel(); 
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
 
-    const textToRead = "AI Bod. Integrated Cybernetic Intelligence System. AI Bod is the fully-integrated central mainframe binding every cognitive, sensory and physical subsystem into a single cybernetic organism. Cognitive stacks, including Brain, Memory and Emotion cores, orchestrate reasoning, contextual recall, and affective interpretation through the neural bus. Sensory modules, including Eyes, Ears, Face, and Voice, feed a continuous multi-modal telemetry stream into the mainframe, allowing environmental awareness and human-parity social interaction in real time. Physical actuators, including Hands and Legs, receive fused motion plans generated from cognitive intent and sensory grounding. The AI Heart serves as the power and thermal management matrix, distributing energy across the chassis via a solid-state lithium core with intelligent throttling. Operational philosophy prioritises adaptive coexistence.";
-    
+    const textToRead =
+      "AI Bod. Integrated Cybernetic Intelligence System. AI Bod is the fully-integrated central mainframe binding every cognitive, sensory and physical subsystem into a single cybernetic organism. Cognitive stacks, including Brain, Memory and Emotion cores, orchestrate reasoning, contextual recall, and affective interpretation through the neural bus. Sensory modules, including Eyes, Ears, Face, and Voice, feed a continuous multi-modal telemetry stream into the mainframe, allowing environmental awareness and human-parity social interaction in real time. Physical actuators, including Hands and Legs, receive fused motion plans generated from cognitive intent and sensory grounding. The AI Heart serves as the power and thermal management matrix, distributing energy across the chassis via a solid-state lithium core with intelligent throttling. Operational philosophy prioritises adaptive coexistence.";
+
     const utterance = new SpeechSynthesisUtterance(textToRead);
-    utterance.rate = 1.0; 
+    utterance.rate = 1.0;
     window.speechSynthesis.speak(utterance);
   };
 
   const handleClose = () => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.pause();
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.resume();
-      window.speechSynthesis.cancel();
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel(); // stop speech immediately
     }
     onClose();
   };
@@ -39,7 +37,7 @@ export function BodModal({ onClose }: BodModalProps) {
     <div
       className="fixed inset-0 z-50 grid place-items-center p-4 backdrop-blur-sm animate-fade-in"
       style={{ background: "rgba(251,247,240,0.7)" }}
-      onClick={handleClose}
+      onClick={handleClose} // backdrop click also cancels speech
     >
       <div
         className="relative w-full max-w-2xl rounded-xl glass-card p-6 sm:p-8 animate-fade-in-scale"
@@ -60,7 +58,7 @@ export function BodModal({ onClose }: BodModalProps) {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              handleClose();
+              handleClose(); // ❌ stops speech and closes
             }}
             className="grid h-8 w-8 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
             aria-label="Close"
