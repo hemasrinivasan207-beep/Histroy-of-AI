@@ -1,20 +1,18 @@
 import { useEffect } from "react";
 import { CATEGORY_COLOR, ACTIVE_COLOR, type Hotspot } from "@/data/hotspots";
 
-{activeHotspot && (
-  <DetailCard
-    hotspot={activeHotspot}
-    side={
-      ["eyes", "ears", "voice", "emotion", "hands"].includes(activeHotspot.id.toLowerCase())
-        ? "right"
-        : "left"
-    }
-    onClose={() => setActiveHotspot(null)}
-  />
-)}
+type DetailCardProps = {
+  hotspot: Hotspot;
+  side?: "right" | "left";
+  onClose: () => void;
+};
 
-export function DetailCard({ hotspot, side = "left", onClose }: DetailCardProps) {
+export function DetailCard({ hotspot, onClose }: DetailCardProps) {
   const color = CATEGORY_COLOR[hotspot.category];
+
+  // Automatically decide side based on ID
+  const rightSideIds = ["eyes", "ears", "voice", "emotion", "hands"];
+  const side = rightSideIds.includes(hotspot.id.toLowerCase()) ? "right" : "left";
 
   useEffect(() => {
     return () => {
@@ -45,7 +43,7 @@ export function DetailCard({ hotspot, side = "left", onClose }: DetailCardProps)
     onClose();
   };
 
-  // Position dynamically based on the side argument
+  // Position dynamically based on the calculated side
   const positionClass = side === "right" ? "fixed bottom-4 right-4 z-40" : "fixed bottom-4 left-4 z-40";
 
   return (
