@@ -4,7 +4,6 @@ type BodModalProps = {
   onClose: () => void;
 };
 
-// Keep a global reference to stop speech even if component unmounts
 let activeUtterance: SpeechSynthesisUtterance | null = null;
 
 export function BodModal({ onClose }: BodModalProps) {
@@ -21,15 +20,15 @@ export function BodModal({ onClose }: BodModalProps) {
 
   const handleClose = () => {
     if ('speechSynthesis' in window) {
+      window.speechSynthesis.pause();
       window.speechSynthesis.cancel();
       if (activeUtterance) {
-        activeUtterance.text = ""; // Clears the speech buffer text instantly
+        activeUtterance.text = "";
         activeUtterance = null;
       }
-      // Force-reset queue
       setTimeout(() => {
         window.speechSynthesis.cancel();
-      }, 10);
+      }, 0);
     }
     onClose();
   };
