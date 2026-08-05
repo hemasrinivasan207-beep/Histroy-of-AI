@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { CATEGORY_COLOR, ACTIVE_COLOR, type Hotspot } from "@/data/hotspots";
 
 type DetailCardProps = {
@@ -8,14 +9,33 @@ type DetailCardProps = {
 export function DetailCard({ hotspot, onClose }: DetailCardProps) {
   const color = CATEGORY_COLOR[hotspot.category];
 
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
   const speakContent = () => {
     if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel(); // Stop any ongoing speech
+    window.speechSynthesis.cancel();
 
     const textToRead = `${hotspot.name}. ${hotspot.description}. Fun fact: ${hotspot.funFact}. Origin log: ${hotspot.history}`;
     const utterance = new SpeechSynthesisUtterance(textToRead);
     utterance.rate = 1.0; 
     window.speechSynthesis.speak(utterance);
+  };
+
+  const stopSpeech = () => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const handleClose = () => {
+    stopSpeech();
+    onClose();
   };
 
   return (
@@ -25,13 +45,12 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
         style={{ border: "2px solid #4fd1c5", boxShadow: "0 0 25px rgba(79,209,197,0.4)" }}
       >
         <div className="glass-card p-5 relative">
-          {/* Category color top accent bar */}
           <div
             className="absolute inset-x-5 -top-px h-[2px] rounded-full"
             style={{ background: color }}
           />
 
-          {/* Action Buttons (Read Aloud & Close) */}
+          {/* Read, Stop & Close Buttons */}
           <div className="absolute right-3 top-3 flex items-center gap-1.5">
             <button
               onClick={speakContent}
@@ -41,7 +60,14 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
               🔊 Read
             </button>
             <button
-              onClick={onClose}
+              onClick={stopSpeech}
+              className="grid h-7 px-2.5 place-items-center rounded-lg font-mono text-[10px] uppercase tracking-widest bg-red-500/10 border border-red-500/30 text-red-400 transition-colors hover:bg-red-500/20"
+              aria-label="Stop Speech"
+            >
+              ⏹ Stop
+            </button>
+            <button
+              onClick={handleClose}
               className="grid h-7 w-7 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
               aria-label="Close"
             >
@@ -93,7 +119,6 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
             {hotspot.description}
           </p>
 
-          {/* Fun fact */}
           <div
             className="mt-3 rounded-lg p-3 font-body text-xs leading-relaxed"
             style={{
@@ -108,7 +133,6 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
             <p className="mt-1">{hotspot.funFact}</p>
           </div>
 
-          {/* Origin Log */}
           <div className="mt-4">
             <p
               className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em]"
