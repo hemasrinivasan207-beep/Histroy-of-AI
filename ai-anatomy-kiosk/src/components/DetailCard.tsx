@@ -57,14 +57,14 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
               className="grid h-7 px-2.5 place-items-center rounded-lg font-mono text-[10px] uppercase tracking-widest bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 transition-colors hover:bg-cyan-500/20"
               aria-label="Read Aloud"
             >
-              🔊 Read
+              🔊 
             </button>
             <button
               onClick={stopSpeech}
               className="grid h-7 px-2.5 place-items-center rounded-lg font-mono text-[10px] uppercase tracking-widest bg-red-500/10 border border-red-500/30 text-red-400 transition-colors hover:bg-red-500/20"
               aria-label="Stop Speech"
             >
-              ⏹ Stop
+               🔇
             </button>
             <button
               onClick={handleClose}
