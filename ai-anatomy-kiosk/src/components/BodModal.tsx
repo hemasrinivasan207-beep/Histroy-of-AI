@@ -46,10 +46,9 @@ export function BodModal({ onClose }: BodModalProps) {
         className="relative w-full max-w-2xl rounded-xl glass-card p-6 sm:p-8 animate-fade-in-scale"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Coral accent bar */}
         <div className="absolute inset-x-6 -top-px h-[2px] rounded-full bg-core" />
 
-        {/* Action Buttons (Read, Stop, & Close) */}
+        {/* Read, Stop & Close Buttons */}
         <div className="absolute right-3 top-3 flex items-center gap-1.5">
           <button
             onClick={speakContent}
