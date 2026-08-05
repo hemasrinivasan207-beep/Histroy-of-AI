@@ -10,8 +10,9 @@ type DetailCardProps = {
 export function DetailCard({ hotspot, onClose }: DetailCardProps) {
   const color = CATEGORY_COLOR[hotspot.category];
 
-  // Automatically decide side based on ID
-  const rightSideIds = ["eyes", "ears", "voice", "emotion", "hands"];
+  // Right side: Brain, Memory, Face, Heart, Leg
+  // Left side: Eyes, Ears, Voice, Emotion, Hands
+  const rightSideIds = ["brain", "memory", "face", "heart", "leg"];
   const side = rightSideIds.includes(hotspot.id.toLowerCase()) ? "right" : "left";
 
   useEffect(() => {
@@ -43,7 +44,6 @@ export function DetailCard({ hotspot, onClose }: DetailCardProps) {
     onClose();
   };
 
-  // Position dynamically based on the calculated side
   const positionClass = side === "right" ? "fixed bottom-4 right-4 z-40" : "fixed bottom-4 left-4 z-40";
 
   return (
