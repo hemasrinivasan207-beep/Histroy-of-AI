@@ -17,7 +17,8 @@ export function BodModal({ onClose }: BodModalProps) {
 
   const handleClose = () => {
     if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel(); // Stops speech immediately when closed
+      window.speechSynthesis.cancel(); 
+      window.speechSynthesis.pause(); // Force-halts speech queue
     }
     onClose();
   };
@@ -45,7 +46,10 @@ export function BodModal({ onClose }: BodModalProps) {
             🔊 Read
           </button>
           <button
-            onClick={handleClose}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClose();
+            }}
             className="grid h-8 w-8 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
             aria-label="Close"
           >
