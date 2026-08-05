@@ -10,9 +10,9 @@ type DetailCardProps = {
 export function DetailCard({ hotspot, onClose }: DetailCardProps) {
   const color = CATEGORY_COLOR[hotspot.category];
 
-  // Right side: Brain, Memory, Face, Heart, Leg
+  // Right side: Brain, Memory, Face, Heart, Legs
   // Left side: Eyes, Ears, Voice, Emotion, Hands
-  const rightSideIds = ["brain", "memory", "face", "heart", "leg"];
+  const rightSideIds = ["brain", "memory", "face", "heart", "legs"];
   const side = rightSideIds.includes(hotspot.id.toLowerCase()) ? "right" : "left";
 
   useEffect(() => {
