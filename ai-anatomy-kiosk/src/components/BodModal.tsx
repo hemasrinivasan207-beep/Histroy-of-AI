@@ -16,7 +16,7 @@ export function BodModal({ onClose }: BodModalProps) {
 
   const speakContent = () => {
     if (!("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
+    window.speechSynthesis.cancel(); // clear any previous speech
 
     const textToRead =
       "AI Bod. Integrated Cybernetic Intelligence System. AI Bod is the fully-integrated central mainframe binding every cognitive, sensory and physical subsystem into a single cybernetic organism. Cognitive stacks, including Brain, Memory and Emotion cores, orchestrate reasoning, contextual recall, and affective interpretation through the neural bus. Sensory modules, including Eyes, Ears, Face, and Voice, feed a continuous multi-modal telemetry stream into the mainframe, allowing environmental awareness and human-parity social interaction in real time. Physical actuators, including Hands and Legs, receive fused motion plans generated from cognitive intent and sensory grounding. The AI Heart serves as the power and thermal management matrix, distributing energy across the chassis via a solid-state lithium core with intelligent throttling. Operational philosophy prioritises adaptive coexistence.";
@@ -26,10 +26,18 @@ export function BodModal({ onClose }: BodModalProps) {
     window.speechSynthesis.speak(utterance);
   };
 
-  const handleClose = () => {
+  const stopSpeech = () => {
     if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel(); // stop speech immediately
+      window.speechSynthesis.cancel();
+      // extra safeguard: clear queue
+      const dummy = new SpeechSynthesisUtterance("");
+      window.speechSynthesis.speak(dummy);
+      window.speechSynthesis.cancel();
     }
+  };
+
+  const handleClose = () => {
+    stopSpeech(); // ensure voice stops
     onClose();
   };
 
@@ -37,7 +45,7 @@ export function BodModal({ onClose }: BodModalProps) {
     <div
       className="fixed inset-0 z-50 grid place-items-center p-4 backdrop-blur-sm animate-fade-in"
       style={{ background: "rgba(251,247,240,0.7)" }}
-      onClick={handleClose} // backdrop click also cancels speech
+      onClick={handleClose}
     >
       <div
         className="relative w-full max-w-2xl rounded-xl glass-card p-6 sm:p-8 animate-fade-in-scale"
