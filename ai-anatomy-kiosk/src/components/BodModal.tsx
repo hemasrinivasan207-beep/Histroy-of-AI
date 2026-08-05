@@ -1,34 +1,34 @@
+import { useEffect } from "react";
 import { CATEGORY_COLOR, ACTIVE_COLOR } from "@/data/hotspots";
 
 type BodModalProps = {
   onClose: () => void;
 };
 
-let activeUtterance: SpeechSynthesisUtterance | null = null;
-
 export function BodModal({ onClose }: BodModalProps) {
+  // Automatically stops speech if the modal unmounts or closes
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
   const speakContent = () => {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel(); 
 
     const textToRead = "AI Bod. Integrated Cybernetic Intelligence System. AI Bod is the fully-integrated central mainframe binding every cognitive, sensory and physical subsystem into a single cybernetic organism. Cognitive stacks, including Brain, Memory and Emotion cores, orchestrate reasoning, contextual recall, and affective interpretation through the neural bus. Sensory modules, including Eyes, Ears, Face, and Voice, feed a continuous multi-modal telemetry stream into the mainframe, allowing environmental awareness and human-parity social interaction in real time. Physical actuators, including Hands and Legs, receive fused motion plans generated from cognitive intent and sensory grounding. The AI Heart serves as the power and thermal management matrix, distributing energy across the chassis via a solid-state lithium core with intelligent throttling. Operational philosophy prioritises adaptive coexistence.";
     
-    activeUtterance = new SpeechSynthesisUtterance(textToRead);
-    activeUtterance.rate = 1.0; 
-    window.speechSynthesis.speak(activeUtterance);
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.rate = 1.0; 
+    window.speechSynthesis.speak(utterance);
   };
 
   const handleClose = () => {
     if ('speechSynthesis' in window) {
-      window.speechSynthesis.pause();
       window.speechSynthesis.cancel();
-      if (activeUtterance) {
-        activeUtterance.text = "";
-        activeUtterance = null;
-      }
-      setTimeout(() => {
-        window.speechSynthesis.cancel();
-      }, 0);
     }
     onClose();
   };
