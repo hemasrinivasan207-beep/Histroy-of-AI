@@ -38,6 +38,12 @@ export function renderErrorPage(): string {
     <p>The AI Anatomy Interface encountered an unexpected error.</p>
     <a href="/">Return to Museum</a>
   </div>
+  <script>
+    // Instantly stop any ongoing text-to-speech if the error page renders
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+  </script>
 </body>
 </html>`;
 }
