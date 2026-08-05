@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { CATEGORY_COLOR, ACTIVE_COLOR } from "@/data/hotspots";
 
 type BodModalProps = {
@@ -6,43 +6,33 @@ type BodModalProps = {
 };
 
 export function BodModal({ onClose }: BodModalProps) {
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
-
   useEffect(() => {
     return () => {
-      if ("speechSynthesis" in window) {
+      if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
     };
   }, []);
 
   const speakContent = () => {
-    if (!("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel(); // clear any previous speech
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel(); 
 
-    const textToRead =
-      "AI Bod. Integrated Cybernetic Intelligence System. AI Bod is the fully-integrated central mainframe binding every cognitive, sensory and physical subsystem into a single cybernetic organism...";
-
+    const textToRead = "AI Bod. Integrated Cybernetic Intelligence System. AI Bod is the fully-integrated central mainframe binding every cognitive, sensory and physical subsystem into a single cybernetic organism. Cognitive stacks, including Brain, Memory and Emotion cores, orchestrate reasoning, contextual recall, and affective interpretation through the neural bus. Sensory modules, including Eyes, Ears, Face, and Voice, feed a continuous multi-modal telemetry stream into the mainframe, allowing environmental awareness and human-parity social interaction in real time. Physical actuators, including Hands and Legs, receive fused motion plans generated from cognitive intent and sensory grounding. The AI Heart serves as the power and thermal management matrix, distributing energy across the chassis via a solid-state lithium core with intelligent throttling. Operational philosophy prioritises adaptive coexistence.";
+    
     const utterance = new SpeechSynthesisUtterance(textToRead);
-    utterance.rate = 1.0;
-
-    utteranceRef.current = utterance;
-    utterance.onend = () => {
-      utteranceRef.current = null;
-    };
-
+    utterance.rate = 1.0; 
     window.speechSynthesis.speak(utterance);
   };
 
   const stopSpeech = () => {
-    if ("speechSynthesis" in window) {
+    if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      utteranceRef.current = null;
     }
   };
 
   const handleClose = () => {
-    stopSpeech(); // stop voice immediately
+    stopSpeech();
     onClose();
   };
 
@@ -59,7 +49,7 @@ export function BodModal({ onClose }: BodModalProps) {
         {/* Coral accent bar */}
         <div className="absolute inset-x-6 -top-px h-[2px] rounded-full bg-core" />
 
-        {/* Action Buttons (Read Aloud, Stop, Close) */}
+        {/* Action Buttons (Read, Stop, & Close) */}
         <div className="absolute right-3 top-3 flex items-center gap-1.5">
           <button
             onClick={speakContent}
@@ -73,12 +63,12 @@ export function BodModal({ onClose }: BodModalProps) {
             className="grid h-7 px-2.5 place-items-center rounded-lg font-mono text-[10px] uppercase tracking-widest bg-red-500/10 border border-red-500/30 text-red-400 transition-colors hover:bg-red-500/20"
             aria-label="Stop Speech"
           >
-            🔇 Stop
+            ⏹ Stop
           </button>
           <button
             onClick={(e) => {
               e.stopPropagation();
-              handleClose(); // ❌ stops speech and closes
+              handleClose();
             }}
             className="grid h-8 w-8 place-items-center rounded-lg text-muted transition-colors hover:bg-card-border hover:text-foreground"
             aria-label="Close"
@@ -87,7 +77,6 @@ export function BodModal({ onClose }: BodModalProps) {
           </button>
         </div>
 
-        {/* Content */}
         <div className="flex items-center gap-2">
           <span
             className="rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.2em]"
@@ -111,7 +100,56 @@ export function BodModal({ onClose }: BodModalProps) {
           Integrated Cybernetic Intelligence System
         </p>
 
-        {/* ... rest of your content unchanged ... */}
+        <div className="mt-5 space-y-4 font-body text-sm leading-relaxed text-foreground">
+          <p>
+            <strong style={{ color: CATEGORY_COLOR.Cognitive }}>AI Bod</strong> is the
+            fully-integrated central mainframe binding every cognitive, sensory and
+            physical subsystem into a single cybernetic organism. Cognitive stacks — the
+            Brain, Memory and Emotion cores — orchestrate reasoning, contextual recall and
+            affective interpretation through the neural bus.
+          </p>
+          <p>
+            Sensory modules — Eyes, Ears, Face and Voice — feed a continuous multi-modal
+            telemetry stream into the mainframe, allowing environmental awareness and
+            human-parity social interaction in real time. Physical actuators — Hands and
+            Legs — receive fused motion plans generated from cognitive intent and sensory
+            grounding.
+          </p>
+          <p>
+            The <strong style={{ color: CATEGORY_COLOR.Core }}>AI Heart</strong> serves as
+            the power and thermal management matrix, distributing energy across the
+            chassis via a solid-state lithium core with intelligent throttling.
+            Operational philosophy prioritises adaptive coexistence: sensing intent,
+            reasoning ethically, and acting with minimum energy and maximum precision.
+          </p>
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {[
+            { k: "Cognitive", v: "3 cores", color: CATEGORY_COLOR.Cognitive },
+            { k: "Sensory", v: "4 arrays", color: CATEGORY_COLOR.Sensory },
+            { k: "Physical", v: "2 systems", color: CATEGORY_COLOR.Physical },
+            { k: "Power", v: "Solid-state", color: CATEGORY_COLOR.Core },
+          ].map((s) => (
+            <div
+              key={s.k}
+              className="rounded-lg p-3 text-center"
+              style={{ border: `1px solid ${s.color}20`, background: `${s.color}08` }}
+            >
+              <p className="font-mono text-[9px] uppercase tracking-widest text-muted">
+                {s.k}
+              </p>
+              <p className="mt-1 font-mono text-xs" style={{ color: s.color }}>
+                {s.v}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 flex items-center justify-between border-t border-card-border pt-3 font-mono text-[10px] uppercase tracking-widest text-muted">
+          <span>Mainframe · Synced</span>
+          <span style={{ color: ACTIVE_COLOR }}>◉ Core Link Active</span>
+        </div>
       </div>
     </div>
   );
