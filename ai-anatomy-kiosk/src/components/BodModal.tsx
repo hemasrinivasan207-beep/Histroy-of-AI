@@ -4,21 +4,32 @@ type BodModalProps = {
   onClose: () => void;
 };
 
+// Keep a global reference to stop speech even if component unmounts
+let activeUtterance: SpeechSynthesisUtterance | null = null;
+
 export function BodModal({ onClose }: BodModalProps) {
   const speakContent = () => {
     if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel(); // Stop any ongoing speech
+    window.speechSynthesis.cancel(); 
 
     const textToRead = "AI Bod. Integrated Cybernetic Intelligence System. AI Bod is the fully-integrated central mainframe binding every cognitive, sensory and physical subsystem into a single cybernetic organism. Cognitive stacks, including Brain, Memory and Emotion cores, orchestrate reasoning, contextual recall, and affective interpretation through the neural bus. Sensory modules, including Eyes, Ears, Face, and Voice, feed a continuous multi-modal telemetry stream into the mainframe, allowing environmental awareness and human-parity social interaction in real time. Physical actuators, including Hands and Legs, receive fused motion plans generated from cognitive intent and sensory grounding. The AI Heart serves as the power and thermal management matrix, distributing energy across the chassis via a solid-state lithium core with intelligent throttling. Operational philosophy prioritises adaptive coexistence.";
-    const utterance = new SpeechSynthesisUtterance(textToRead);
-    utterance.rate = 1.0; 
-    window.speechSynthesis.speak(utterance);
+    
+    activeUtterance = new SpeechSynthesisUtterance(textToRead);
+    activeUtterance.rate = 1.0; 
+    window.speechSynthesis.speak(activeUtterance);
   };
 
   const handleClose = () => {
     if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel(); 
-      window.speechSynthesis.pause(); // Force-halts speech queue
+      window.speechSynthesis.cancel();
+      if (activeUtterance) {
+        activeUtterance.text = ""; // Clears the speech buffer text instantly
+        activeUtterance = null;
+      }
+      // Force-reset queue
+      setTimeout(() => {
+        window.speechSynthesis.cancel();
+      }, 10);
     }
     onClose();
   };
