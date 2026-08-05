@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { CATEGORY_COLOR, ACTIVE_COLOR } from "@/data/hotspots";
 
 type BodModalProps = {
@@ -6,6 +6,8 @@ type BodModalProps = {
 };
 
 export function BodModal({ onClose }: BodModalProps) {
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+
   useEffect(() => {
     return () => {
       if ("speechSynthesis" in window) {
@@ -23,21 +25,22 @@ export function BodModal({ onClose }: BodModalProps) {
 
     const utterance = new SpeechSynthesisUtterance(textToRead);
     utterance.rate = 1.0;
+
+    // Save reference so we can stop it later
+    utteranceRef.current = utterance;
+
     window.speechSynthesis.speak(utterance);
   };
 
   const stopSpeech = () => {
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
-      // extra safeguard: clear queue
-      const dummy = new SpeechSynthesisUtterance("");
-      window.speechSynthesis.speak(dummy);
-      window.speechSynthesis.cancel();
+      utteranceRef.current = null;
     }
   };
 
   const handleClose = () => {
-    stopSpeech(); // ensure voice stops
+    stopSpeech(); // stop voice immediately
     onClose();
   };
 
@@ -75,6 +78,7 @@ export function BodModal({ onClose }: BodModalProps) {
           </button>
         </div>
 
+        {/* Content */}
         <div className="flex items-center gap-2">
           <span
             className="rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.2em]"
