@@ -6,7 +6,6 @@ type BodModalProps = {
 };
 
 export function BodModal({ onClose }: BodModalProps) {
-  // Automatically stops speech if the modal unmounts or closes
   useEffect(() => {
     return () => {
       if ('speechSynthesis' in window) {
@@ -28,6 +27,9 @@ export function BodModal({ onClose }: BodModalProps) {
 
   const handleClose = () => {
     if ('speechSynthesis' in window) {
+      window.speechSynthesis.pause();
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.resume();
       window.speechSynthesis.cancel();
     }
     onClose();
