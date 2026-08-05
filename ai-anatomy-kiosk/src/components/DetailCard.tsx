@@ -1,11 +1,17 @@
 import { useEffect } from "react";
 import { CATEGORY_COLOR, ACTIVE_COLOR, type Hotspot } from "@/data/hotspots";
 
-type DetailCardProps = {
-  hotspot: Hotspot;
-  side?: "right" | "left";
-  onClose: () => void;
-};
+{activeHotspot && (
+  <DetailCard
+    hotspot={activeHotspot}
+    side={
+      ["eyes", "ears", "voice", "emotion", "hands"].includes(activeHotspot.id.toLowerCase())
+        ? "right"
+        : "left"
+    }
+    onClose={() => setActiveHotspot(null)}
+  />
+)}
 
 export function DetailCard({ hotspot, side = "left", onClose }: DetailCardProps) {
   const color = CATEGORY_COLOR[hotspot.category];
